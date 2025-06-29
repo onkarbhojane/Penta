@@ -1,9 +1,22 @@
-import Transaction from "../../models/Transaction.models.js";
+import { Request, Response } from "express";
+import Transaction from "../../models/Transaction.models";
 
-export const getDailyRevenueAndExpenses = async (req, res) => {
+interface DailyData {
+  [key: string]: { day: string; income: number; expense: number };
+}
+
+interface WeeklyData {
+  [key: string]: { week: string; income: number; expense: number };
+}
+
+interface MonthlyData {
+  [key: string]: { month: string; income: number; expense: number };
+}
+
+export const getDailyRevenueAndExpenses = async (req: Request, res: Response): Promise<void> => {
   try {
     const transactions = await Transaction.find({ status: "Paid" });
-    const data = {};
+    const data: DailyData = {};
 
     transactions.forEach(tx => {
       const date = new Date(tx.date);
@@ -13,7 +26,7 @@ export const getDailyRevenueAndExpenses = async (req, res) => {
       tx.category === "Revenue" ? data[label].income += tx.amount : data[label].expense += tx.amount;
     });
 
-    const sorted = Object.values(data).sort((a, b) => new Date(a.day) - new Date(b.day));
+    const sorted = Object.values(data).sort((a, b) => new Date(a.day).getTime() - new Date(b.day).getTime());
     res.status(200).json({ message: "Daily trend fetched", data: sorted });
   } catch (err) {
     console.error("Daily trend error:", err);
@@ -21,10 +34,10 @@ export const getDailyRevenueAndExpenses = async (req, res) => {
   }
 };
 
-export const getWeeklyRevenueAndExpenses = async (req, res) => {
+export const getWeeklyRevenueAndExpenses = async (req: Request, res: Response): Promise<void> => {
   try {
     const transactions = await Transaction.find({ status: "Paid" });
-    const data = {};
+    const data: WeeklyData = {};
 
     transactions.forEach(tx => {
       const date = new Date(tx.date);
@@ -43,10 +56,10 @@ export const getWeeklyRevenueAndExpenses = async (req, res) => {
   }
 };
 
-export const getMonthlyRevenueAndExpenses = async (req, res) => {
+export const getMonthlyRevenueAndExpenses = async (req: Request, res: Response): Promise<void> => {
   try {
     const transactions = await Transaction.find({ status: "Paid" });
-    const data = {};
+    const data: MonthlyData = {};
 
     transactions.forEach(tx => {
       const date = new Date(tx.date);

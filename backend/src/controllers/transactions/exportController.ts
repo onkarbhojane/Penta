@@ -1,12 +1,13 @@
-import Transaction from "../../models/Transaction.models.js";
-import { generateCSV } from "../../services/csvService.js";
+import { Request, Response } from "express";
+import Transaction from "../../models/Transaction.models";
+import { generateCSV } from "../../services/csvService";
 import exceljs from "exceljs";
 
-export const exportTransactionsToCSV = async (req, res) => {
+export const exportTransactionsToCSV = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { search = "", sortField = "date", sortOrder = "desc", status } = req.query;
+    const { search = "", sortField = "date", sortOrder = "desc", status } = req.query as Record<string, string>;
 
-    const filter = {};
+    const filter: Record<string, any> = {};
     if (status) filter.status = status;
     if (search) {
       filter.$or = [
@@ -15,13 +16,14 @@ export const exportTransactionsToCSV = async (req, res) => {
       ];
     }
 
-    const sortOptions = {};
+    const sortOptions: Record<string, number> = {};
     sortOptions[sortField] = sortOrder === "asc" ? 1 : -1;
 
     const transactions = await Transaction.find(filter).sort(sortOptions).lean();
 
     if (!transactions.length) {
-      return res.status(404).json({ message: "No transactions found to export" });
+      res.status(404).json({ message: "No transactions found to export" });
+      return;
     }
 
     const csv = generateCSV(transactions, ["user_id", "name", "date", "amount", "status"]);
@@ -35,7 +37,7 @@ export const exportTransactionsToCSV = async (req, res) => {
   }
 };
 
-export const exportFinancialReport = async (req, res) => {
+export const exportFinancialReport = async (req: Request, res: Response): Promise<void> => {
   try {
     const workbook = new exceljs.Workbook();
 
@@ -59,7 +61,7 @@ export const exportFinancialReport = async (req, res) => {
     summarySheet.addRow({ metric: "Net Profit", amount: revenue - Math.abs(expense) });
 
     summarySheet.getRow(1).font = { bold: true };
-    summarySheet.getRow(1).eachCell(cell => {
+    summarySheet.getRow(1).eachCell((cell: { fill: { type: string; pattern: string; fgColor: { argb: string; }; }; }) => {
       cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFD9EAD3" } };
     });
 
@@ -121,12 +123,12 @@ export const exportFinancialReport = async (req, res) => {
     });
 
     monthlySheet.getRow(1).font = { bold: true };
-    monthlySheet.getRow(1).eachCell(cell => {
+    monthlySheet.getRow(1).eachCell((cell: { fill: { type: string; pattern: string; fgColor: { argb: string; }; }; }) => {
       cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFD9EAD3" } };
     });
 
-    const { search, sortField, sortOrder, status } = req.query;
-    const filter = {};
+    const { search, sortField, sortOrder, status } = req.query as Record<string, string>;
+    const filter: Record<string, any> = {};
     if (status) filter.status = status;
     if (search) {
       filter.$or = [
@@ -135,7 +137,7 @@ export const exportFinancialReport = async (req, res) => {
       ];
     }
 
-    const sortOptions = {};
+    const sortOptions: Record<string, number> = {};
     sortOptions[sortField || "date"] = sortOrder === "asc" ? 1 : -1;
 
     const transactions = await Transaction.find(filter).sort(sortOptions).lean();
@@ -163,7 +165,7 @@ export const exportFinancialReport = async (req, res) => {
     });
 
     transactionsSheet.getRow(1).font = { bold: true };
-    transactionsSheet.getRow(1).eachCell(cell => {
+    transactionsSheet.getRow(1).eachCell((cell: { fill: { type: string; pattern: string; fgColor: { argb: string; }; }; }) => {
       cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFD9EAD3" } };
     });
 
