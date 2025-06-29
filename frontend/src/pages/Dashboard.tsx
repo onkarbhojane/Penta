@@ -407,22 +407,16 @@ const Dashboard = () => {
                 title="Balance"
                 value={formatCurrency(summaryData.balance)}
                 icon={<FiDollarSign />}
-                change="+2.5%"
-                changePositive={true}
               />
               <SummaryCard
                 title="Revenue"
                 value={formatCurrency(summaryData.revenue)}
                 icon={<FiTrendingUp />}
-                change="+3.2%"
-                changePositive={true}
               />
               <SummaryCard
                 title="Expenses"
                 value={formatCurrency(summaryData.expense)}
                 icon={<FiCreditCard />}
-                change="-1.8%"
-                changePositive={false}
               />
               <SummaryCard
                 title="Savings"
@@ -430,8 +424,6 @@ const Dashboard = () => {
                   summaryData.revenue - summaryData.expense
                 )}
                 icon={<FiPieChart />}
-                change="+4.1%"
-                changePositive={true}
               />
             </div>
 

@@ -26,18 +26,6 @@ const SummaryCard: React.FC<SummaryCardProps> = ({
         {icon}
       </div>
     </div>
-    <div
-      className={`flex items-center mt-4 ${
-        changePositive ? "text-emerald-400" : "text-amber-400"
-      }`}
-    >
-      {changePositive ? (
-        <FiArrowUpRight className="mr-1" />
-      ) : (
-        <FiArrowDownRight className="mr-1" />
-      )} 
-      <span className="text-sm font-medium">{change}</span>
-    </div>
   </div>
 );
 
