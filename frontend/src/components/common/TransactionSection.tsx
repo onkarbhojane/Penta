@@ -38,6 +38,7 @@ const TransactionSection: React.FC = () => {
 
   const fetchTransactions = async (page: number) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.get(
         `https://penta-eczo.onrender.com/api/transactions/list`,
         {
@@ -49,6 +50,9 @@ const TransactionSection: React.FC = () => {
             sortOrder,
             status: statusFilter,
             category: categoryFilter,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         }
       );
