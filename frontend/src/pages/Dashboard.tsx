@@ -57,7 +57,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}api/transactions/summary`,
+        `https://penta-eczo.onrender.com/api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(
@@ -67,12 +67,15 @@ const Dashboard = () => {
       console.error("Error fetching summary data:", error);
     }
   };
+  useEffect(() => {
+    console.log(import.meta.env.API_URL,"apiUrl");
+  },[])
 
   const getMonthlyRevenueAndExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}api/transactions/trends/monthly`,
+        `https://penta-eczo.onrender.com/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -114,7 +117,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `${apiUrl}api/transactions/trends/weekly`,
+        `https://penta-eczo.onrender.com/api/transactions/trends/weekly`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -187,7 +190,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}api/transactions/trends/daily`,
+        `https://penta-eczo.onrender.com/api/transactions/trends/daily`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -254,7 +257,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}api/transactions/recent`,
+        `https://penta-eczo.onrender.com/api/transactions/recent`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactions(response.data.data || []);

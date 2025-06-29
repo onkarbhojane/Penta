@@ -84,7 +84,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: SummaryData }>(
-        `${apiUrl}api/transactions/summary`,
+        `https://penta-eczo.onrender.com/api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(response.data?.data);
@@ -97,7 +97,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: TransactionStatus }>(
-        `${apiUrl}api/transactions/status`,
+        `https://penta-eczo.onrender.com/api/transactions/status`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactionStatus(response.data?.data);
@@ -110,7 +110,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: MonthlySummary[] }>(
-        `${apiUrl}api/transactions/trends/monthly`,
+        `https://penta-eczo.onrender.com/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -132,7 +132,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: StatusCategoryData }>(
-        `${apiUrl}api/transactions/status-category`,
+        `https://penta-eczo.onrender.com/api/transactions/status-category`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setData(response.data?.data);
@@ -153,7 +153,7 @@ const AnalyticsSection: React.FC = () => {
       setExportLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}api/transactions/export/excel`,
+        `https://penta-eczo.onrender.com/api/transactions/export/excel`,
         {
           params: { period },
           responseType: "blob",

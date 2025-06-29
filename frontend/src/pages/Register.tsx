@@ -44,7 +44,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ tempToken: string }>(
-        `${apiUrl}/api/auth/register`,
+        `https://penta-eczo.onrender.com/api/auth/register`,
         { email, name }
       );
       setToken(response.data.tempToken);
@@ -69,7 +69,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ verifyToken: string }>(
-        `${apiUrl}/api/auth/verify`,
+        `https://penta-eczo.onrender.com/api/auth/verify`,
         {
           email,
           otp: otp.join(""),
@@ -99,7 +99,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ token: string }>(
-        `${apiUrl}/api/auth/set-password`,
+        `https://penta-eczo.onrender.com/api/auth/set-password`,
         {
           email,
           username:name,
@@ -126,7 +126,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
     setError("");
     try {
-      await axios.post(`${apiUrl}/api/auth/resend-otp`, { email, tempToken: token });
+      await axios.post(`https://penta-eczo.onrender.com/api/auth/resend-otp`, { email, tempToken: token });
       setSuccess("New OTP sent to your email!");
       startResendTimer();
     } catch (err: any) {
