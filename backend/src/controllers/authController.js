@@ -62,6 +62,37 @@ export const verifyOTP = async (req, res) => {
   }
 };
 
+export const resendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).send("Email is required");
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).send("User not found");
+
+    if (user.isEmailVerified) {
+      return res.status(400).send("Email is already verified");
+    }
+
+    const otp = generateOTP();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+    user.otp = otp;
+    user.otpExpiresAt = expiresAt;
+    await user.save();
+
+    await sendMail(
+      email,
+      "Resend OTP Code",
+      `Your new OTP is ${otp}. It will expire in 10 minutes.`
+    );
+
+    res.status(200).send("OTP resent successfully");
+  } catch (error) {
+    console.error("Error in resendOTP:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 export const setPassword = async (req, res) => {
   try {
     const { email, password } = req.body;

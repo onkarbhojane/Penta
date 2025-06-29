@@ -1,4 +1,3 @@
-// src/pages/Dashboard.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,10 +12,8 @@ import {
   FiUser,
   FiMessageSquare,
   FiSettings,
-  FiLogOut,
-  FiBell,
 } from "react-icons/fi";
-import '../utils/chartConfig'
+import "../utils/chartConfig";
 import SummaryCard from "../components/dashboard/SummaryCard";
 import Sidebar from "../components/dashboard/Sidebar";
 import Header from "../components/dashboard/Header";
@@ -33,7 +30,7 @@ const Dashboard = () => {
   const [activeNav, setActiveNav] = useState<string>("Dashboard");
   const mainContentRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
-  const isScrollingRef = useRef(false); // ✅ ADDED missing scroll flag
+  const isScrollingRef = useRef(false);
   const [timeframe, setTimeframe] = useState("Monthly");
   const [selectedDate, setSelectedDate] = useState("2024-06-01");
   const navigate = useNavigate();
@@ -48,7 +45,6 @@ const Dashboard = () => {
     datasets: [],
   });
 
-  // Section Refs
   const dashboardRef = useRef<HTMLDivElement>(null);
   const transactionsRef = useRef<HTMLDivElement>(null);
   const analyticsRef = useRef<HTMLDivElement>(null);
@@ -57,7 +53,6 @@ const Dashboard = () => {
   const messageRef = useRef<HTMLDivElement>(null);
   const settingRef = useRef<HTMLDivElement>(null);
 
-  // Fetch summary data
   const getBalanceRevenueExpense = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -117,38 +112,50 @@ const Dashboard = () => {
   const getWeeklyRevenueAndExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
+
       const response = await axios.get(
         "http://localhost:5000/api/transactions/trends/weekly",
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       const apiData = response.data.data;
-      const shortMonths = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ];
+
+      const monthMap: Record<string, number> = {
+        Jan: 0,
+        Feb: 1,
+        Mar: 2,
+        Apr: 3,
+        May: 4,
+        Jun: 5,
+        Jul: 6,
+        Aug: 7,
+        Sept: 8,
+        Oct: 9,
+        Nov: 10,
+        Dec: 11,
+      };
 
       const sortedData = [...apiData].sort((a, b) => {
-        const [aDay, aMonth, aYear] = a.week.split(" - ")[0].split("/").map(Number);
-        const [bDay, bMonth, bYear] = b.week.split(" - ")[0].split("/").map(Number);
-        return new Date(aYear, aMonth - 1, aDay).getTime() - new Date(bYear, bMonth - 1, bDay).getTime();
+        const [, aWeekStr, aMonthStr] = a.week.match(/Week (\d), (\w+)/) || [];
+        const [, bWeekStr, bMonthStr] = b.week.match(/Week (\d), (\w+)/) || [];
+
+        const aDate = new Date(
+          2024,
+          monthMap[aMonthStr],
+          (parseInt(aWeekStr) - 1) * 7 + 1
+        );
+        const bDate = new Date(
+          2024,
+          monthMap[bMonthStr],
+          (parseInt(bWeekStr) - 1) * 7 + 1
+        );
+
+        return aDate.getTime() - bDate.getTime();
       });
 
-      const labels = sortedData.map((entry) => {
-        const [start, end] = entry.week.split(" - ");
-        const [sDay, sMonth, sYear] = start.split("/").map(Number);
-        const [eDay, eMonth, eYear] = end.split("/").map(Number);
-
-        const startDate = new Date(sYear, sMonth - 1, sDay);
-        const endDate = new Date(eYear, eMonth - 1, eDay);
-
-        const startLabel = `${shortMonths[startDate.getMonth()]} ${startDate.getDate()}`;
-        const endLabel = startDate.getMonth() === endDate.getMonth()
-          ? `${endDate.getDate()}`
-          : `${shortMonths[endDate.getMonth()]} ${endDate.getDate()}`;
-
-        return `${startLabel} – ${endLabel}`;
-      });
+      const labels = sortedData.map((entry) => entry.week);
 
       setChartData({
         labels,
@@ -190,8 +197,18 @@ const Dashboard = () => {
       twentyDaysAgo.setDate(today.getDate() - 19);
 
       const shortMonths = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
       ];
 
       const filteredData = apiData
@@ -203,7 +220,8 @@ const Dashboard = () => {
         .sort((a, b) => a.dateObj.getTime() - b.dateObj.getTime());
 
       const labels = filteredData.map(
-        ({ dateObj }) => `${shortMonths[dateObj.getMonth()]} ${dateObj.getDate()}`
+        ({ dateObj }) =>
+          `${shortMonths[dateObj.getMonth()]} ${dateObj.getDate()}`
       );
 
       setChartData({
@@ -269,10 +287,10 @@ const Dashboard = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user-storage");
     navigate("/");
   };
 
-  // ✅ Sync scroll between sidebar and content
   useEffect(() => {
     const mainContent = mainContentRef.current;
     const sidebar = sidebarRef.current;
@@ -317,7 +335,9 @@ const Dashboard = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const section = sectionRefs.find((s) => s.ref.current === entry.target);
+          const section = sectionRefs.find(
+            (s) => s.ref.current === entry.target
+          );
           if (section) setActiveNav(section.label);
         }
       });
@@ -375,19 +395,41 @@ const Dashboard = () => {
       />
 
       <main ref={mainContentRef} className="flex-1 overflow-y-auto">
-        <Header
-          activeNav={activeNav}
-          user={user}
-          onSignOut={handleSignOut}
-        />
+        <Header activeNav={activeNav} user={user} onSignOut={handleSignOut} />
 
         <div className="p-8">
           <div ref={dashboardRef} style={{ scrollMarginTop: "80px" }}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <SummaryCard title="Balance" value={formatCurrency(summaryData.balance)} icon={<FiDollarSign />} change="+2.5%" changePositive={true} />
-              <SummaryCard title="Revenue" value={formatCurrency(summaryData.revenue)} icon={<FiTrendingUp />} change="+3.2%" changePositive={true} />
-              <SummaryCard title="Expenses" value={formatCurrency(summaryData.expense)} icon={<FiCreditCard />} change="-1.8%" changePositive={false} />
-              <SummaryCard title="Savings" value={formatCurrency(summaryData.revenue - summaryData.expense)} icon={<FiPieChart />} change="+4.1%" changePositive={true} />
+              <SummaryCard
+                title="Balance"
+                value={formatCurrency(summaryData.balance)}
+                icon={<FiDollarSign />}
+                change="+2.5%"
+                changePositive={true}
+              />
+              <SummaryCard
+                title="Revenue"
+                value={formatCurrency(summaryData.revenue)}
+                icon={<FiTrendingUp />}
+                change="+3.2%"
+                changePositive={true}
+              />
+              <SummaryCard
+                title="Expenses"
+                value={formatCurrency(summaryData.expense)}
+                icon={<FiCreditCard />}
+                change="-1.8%"
+                changePositive={false}
+              />
+              <SummaryCard
+                title="Savings"
+                value={formatCurrency(
+                  summaryData.revenue - summaryData.expense
+                )}
+                icon={<FiPieChart />}
+                change="+4.1%"
+                changePositive={true}
+              />
             </div>
 
             <div className="flex flex-col md:flex-row gap-6">

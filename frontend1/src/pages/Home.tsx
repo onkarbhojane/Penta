@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import useUserStore from "../store/useUserStore";
+import logo from "../assets/logo.png";
 interface Feature {
   title: string;
   desc: string;
@@ -82,15 +83,19 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      {/* Navbar */}
       <nav className="flex justify-between items-center p-6 border-b border-gray-700">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg" />
+          <img
+            src={logo}
+            alt="Penta Logo"
+            className="w-7 h-7 rounded-lg object-contain"
+          />
           <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
             Penta
           </span>
         </div>
-        {localStorage.getItem("token")!==null ? (
+
+        {localStorage.getItem("token") !== null ? (
           <Link
             to="/dashboard"
             className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
@@ -112,8 +117,6 @@ const Home: React.FC = () => {
           </Link>
         )}
       </nav>
-
-      {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 mb-16 md:mb-0">
           <motion.div
@@ -132,7 +135,9 @@ const Home: React.FC = () => {
               transactions, visualize trends, and generate reports in real-time.
             </p>
             <Link
-              to={localStorage.getItem("token")!==null ? "/dashboard" : "/login"}
+              to={
+                localStorage.getItem("token") !== null ? "/dashboard" : "/login"
+              }
               className="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-700 hover:from-blue-500 hover:to-purple-600 text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Get Started
@@ -191,7 +196,6 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Features */}
       <div className="py-16 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -221,7 +225,6 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="py-8 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
           <p>© 2023 FinDash Analytics. All rights reserved.</p>

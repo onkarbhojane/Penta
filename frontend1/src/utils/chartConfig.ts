@@ -11,7 +11,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register necessary components
 ChartJS.register(
   LineElement,
   PointElement,

@@ -3,6 +3,7 @@ import {
   registerUser,
   verifyOTP,
   setPassword,
+  resendOTP,
   loginUser,
   forgotPassword,
   verifyResetOTP,
@@ -17,6 +18,7 @@ router.post("/set-password", setPassword);
 router.post("/login", loginUser);
 router.post("/forgot-password", forgotPassword);
 router.post("/verify-reset-otp", verifyResetOTP);
+router.post("/resend-otp", resendOTP);
 router.post("/reset-password", resetPassword);
 
 export default router;

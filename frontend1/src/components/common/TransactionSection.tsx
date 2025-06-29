@@ -1,9 +1,7 @@
 import React, { useEffect, useState, type Key } from "react";
 import {
   FiSearch,
-  FiCalendar,
   FiArrowUpRight,
-  FiMoreVertical,
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
@@ -109,7 +107,6 @@ const TransactionSection: React.FC = () => {
 
   return (
     <div className="bg-[#23252E] rounded-2xl p-6 shadow-lg text-white w-full mb-8">
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
         <h2 className="text-xl font-bold">Transaction History</h2>
         <div className="flex flex-col md:flex-row gap-3 items-center">
@@ -185,7 +182,6 @@ const TransactionSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-[#1A1C22]">
@@ -249,7 +245,6 @@ const TransactionSection: React.FC = () => {
         </table>
       </div>
 
-      {/* Pagination Footer */}
       <div className="flex justify-between items-center mt-6 pt-4 border-t border-[#2A2D35]">
         <p className="text-sm text-gray-400">
           Page {currentPage} of {totalPages}

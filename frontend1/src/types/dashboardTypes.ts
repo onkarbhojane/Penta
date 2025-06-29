@@ -1,6 +1,3 @@
-// src/types/dashboardTypes.ts
-import { type ReactNode } from "react";
-
 export interface SummaryCardProps {
   title: string;
   value: string;

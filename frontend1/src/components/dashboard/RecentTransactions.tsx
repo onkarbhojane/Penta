@@ -1,4 +1,3 @@
-// src/components/dashboard/RecentTransactions.tsx
 import React from "react";
 import type { Transaction } from "../../types/dashboardTypes";
 

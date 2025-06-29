@@ -166,7 +166,6 @@ const ForgotPassword: React.FC = () => {
         transition={{ duration: 0.5 }}
         className="relative bg-gray-800/50 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 w-full max-w-md overflow-hidden"
       >
-        {/* Progress Bar */}
         <div className="h-1 bg-gray-700">
           <motion.div
             className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
@@ -180,7 +179,6 @@ const ForgotPassword: React.FC = () => {
           />
         </div>
 
-        {/* Decorative Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center">
@@ -213,7 +211,6 @@ const ForgotPassword: React.FC = () => {
         </div>
 
         <div className="p-8">
-          {/* Success Message */}
           {success && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -224,7 +221,6 @@ const ForgotPassword: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Error Message */}
           {error && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -235,7 +231,6 @@ const ForgotPassword: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 1: Email Entry */}
           {step === 1 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -312,7 +307,7 @@ const ForgotPassword: React.FC = () => {
                 <p>
                   Remembered your password?{" "}
                   <a
-                    href="/login"
+                    onClick={() => navigate("/login",{ replace: true })}
                     className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                   >
                     Login
@@ -322,7 +317,6 @@ const ForgotPassword: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 2: OTP Verification */}
           {step === 2 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -394,7 +388,6 @@ const ForgotPassword: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 3: Set New Password */}
           {step === 3 && (
             <motion.div
               initial={{ opacity: 0 }}

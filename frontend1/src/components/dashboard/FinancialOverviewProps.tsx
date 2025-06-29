@@ -1,4 +1,3 @@
-// src/components/dashboard/FinancialOverview.tsx
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { FiChevronDown } from "react-icons/fi";

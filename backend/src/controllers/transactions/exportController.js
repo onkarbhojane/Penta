@@ -2,7 +2,6 @@ import Transaction from "../../models/Transaction.models.js";
 import { generateCSV } from "../../services/csvService.js";
 import exceljs from "exceljs";
 
-// Export to CSV
 export const exportTransactionsToCSV = async (req, res) => {
   try {
     const { search = "", sortField = "date", sortOrder = "desc", status } = req.query;
@@ -36,7 +35,6 @@ export const exportTransactionsToCSV = async (req, res) => {
   }
 };
 
-// Export to Excel
 export const exportFinancialReport = async (req, res) => {
   try {
     const workbook = new exceljs.Workbook();

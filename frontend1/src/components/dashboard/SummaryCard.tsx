@@ -1,4 +1,3 @@
-// src/components/dashboard/SummaryCard.tsx
 import React from "react";
 import { FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 

@@ -1,4 +1,3 @@
-// src/components/dashboard/Header.tsx
 import React, { useState } from "react";
 import { FiBell, FiChevronDown } from "react-icons/fi";
 import type { User } from "../../types/authTypes";

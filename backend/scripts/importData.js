@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
-import Transaction from '../src/models/Transaction.models.js'; // Adjust path if needed
+import Transaction from '../src/models/Transaction.models.js';
 
 dotenv.config();
 

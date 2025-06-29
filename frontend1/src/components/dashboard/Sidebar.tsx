@@ -1,6 +1,5 @@
-// src/components/dashboard/Sidebar.tsx
 import React from "react";
-
+import logo from "../../assets/logo.png";
 export interface NavItem {
   id: string;
   label: string;
@@ -26,12 +25,16 @@ const Sidebar: React.FC<SidebarProps> = ({
   >
     <div>
       <div className="flex items-center space-x-3 text-xl font-bold mb-10">
-        <div className="bg-indigo-600 w-10 h-10 rounded-lg flex items-center justify-center">
-          <span className="font-bold text-white">P</span>
+        <div className="flex items-center space-x-2">
+          <img
+            src={logo}
+            alt="Penta Logo"
+            className="w-7 h-7 rounded-lg object-contain"
+          />
+          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            Penta
+          </span>
         </div>
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-          Penta
-        </span>
       </div>
       <nav className="space-y-2">
         {navItems.map((item) => (

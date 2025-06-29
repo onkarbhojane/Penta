@@ -3,6 +3,6 @@ import { sendTestEmail } from "../controllers/mailController.js";
 
 const router = express.Router();
 
-router.get("/test", sendTestEmail); // test via GET or change to POST
+router.get("/test", sendTestEmail);
 
 export default router;

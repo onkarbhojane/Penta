@@ -126,7 +126,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
     setError("");
     try {
-      await axios.post("/api/register/resend-otp", { email, tempToken: token });
+      await axios.post("http://localhost:5000/api/auth/resend-otp", { email, tempToken: token });
       setSuccess("New OTP sent to your email!");
       startResendTimer();
     } catch (err: any) {
@@ -185,7 +185,6 @@ const Register: React.FC = () => {
           />
         </div>
 
-        {/* Decorative Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center">
@@ -218,7 +217,6 @@ const Register: React.FC = () => {
         </div>
 
         <div className="p-8">
-          {/* Success Message */}
           {success && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -229,7 +227,6 @@ const Register: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Error Message */}
           {error && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -240,7 +237,6 @@ const Register: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 1: Name and Email */}
           {step === 1 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -347,7 +343,7 @@ const Register: React.FC = () => {
                 <p>
                   Already have an account?{" "}
                   <a
-                    href="/login"
+                    onClick={() => navigate("/login", { replace: true })}
                     className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                   >
                     Login
@@ -357,7 +353,6 @@ const Register: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 2: OTP Verification */}
           {step === 2 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -429,7 +424,6 @@ const Register: React.FC = () => {
             </motion.div>
           )}
 
-          {/* Step 3: Set Password */}
           {step === 3 && (
             <motion.div
               initial={{ opacity: 0 }}
