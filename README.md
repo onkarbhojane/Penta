@@ -1,40 +1,32 @@
-# 📊 Financial Analytics Dashboard
+📊 Financial Analytics Dashboard
+An end-to-end full-stack financial analytics dashboard that enables authenticated users to visualize, search, filter, and export transaction data. Built with React (TypeScript), Node.js, MongoDB, and JWT-based authentication.
 
-An end-to-end full-stack financial analytics dashboard that enables authenticated users to visualize, search, filter, and export transaction data. Built with **React (TypeScript)**, **Node.js**, **MongoDB**, and JWT-based authentication.
+🧩 Tech Stack
+🚀 Frontend
+React.js (TypeScript)
 
----
+Material UI
 
-## 🔗 Live Demo / Figma Design
+Chart.js
 
-> 💡 Add link here when available:
-> **Figma Design:** [Click here](#)
+Axios, React Router DOM
 
----
+🔧 Backend
+Node.js with TypeScript
 
-## 🧩 Tech Stack
+Express.js
 
-### 🚀 Frontend
+MongoDB + Mongoose
 
-- **React.js (TypeScript)**
-- **Material UI** or **Chakra UI**
-- **Chart.js / Recharts**
-- **Axios**, **React Router DOM**
+JWT Authentication
 
-### 🔧 Backend
+CSV & Excel Generation
 
-- **Node.js with TypeScript**
-- **Express.js**
-- **MongoDB + Mongoose**
-- **JWT Authentication**
-- **CSV Generation (e.g., `fast-csv` / `csv-writer`)**
-
----
-
-## 📁 Project Structure
-
-### Frontend: `frontend/`
-
-```
+📁 Project Structure
+Frontend: frontend/
+bash
+Copy
+Edit
 frontend/
 ├── public/
 ├── src/
@@ -51,27 +43,246 @@ frontend/
 │   ├── App.tsx
 │   └── index.tsx
 ├── .env
-├── package.json
-└── README.md
-```
+└── package.json
+Backend: backend/
+bash
+Copy
+Edit
+backend/
+├── src/
+│   ├── controllers/            # Controller logic (auth, transactions)
+│   ├── models/                 # MongoDB schema models
+│   ├── routes/                 # Express route handlers
+│   ├── services/               # Business logic
+│   ├── utils/                  # Helper functions
+│   ├── middlewares/           # Auth middleware
+│   ├── config/                 # DB connection config
+│   └── server.ts              # App entry point
+├── .env
+└── package.json
+✅ Features
+🧑‍💼 Authentication
+Secure JWT login
+
+Role-based protected routes
+
+📊 Dashboard Analytics
+Revenue vs Expense charts
+
+Category-wise breakdown
+
+Summary cards (balance, total revenue, total expense)
+
+Transaction table with pagination
+
+🔍 Filters & Search
+Filter by Date, Category, Amount, Status, User
+
+Column sorting
+
+Global search
+
+📤 Export Options
+Export CSV with selected columns
+
+Export Financial Report in Excel format
+
+⚙️ Setup Instructions
+🖥️ Prerequisites
+Node.js >=18.x
+
+MongoDB
+
+npm
+
+🚀 Setup
+bash
+Copy
+Edit
+git clone https://github.com/onkarbhojane/Penta
+Frontend
+bash
+Copy
+Edit
+cd frontend
+npm install
+npm run dev
+Backend
+bash
+Copy
+Edit
+cd backend
+npm install
+Create .env in backend/:
+
+env
+Copy
+Edit
+PORT=5000
+MONGO_URI=mongodb://localhost:27017
+JWT_SECRET=pqrs
+EMAIL_USER="onkar.bhojane22@gmail.com"
+EMAIL_PASS="elvt vask mdlq clng"
+Then run the backend:
+
+bash
+Copy
+Edit
+npm run dev
+📡 API Endpoints
+🔐 Auth
+Method	Endpoint	Description
+POST	/api/auth/login	Login user
+GET	/api/auth/profile	Get profile info
+
+💸 Transaction APIs
+Method	Endpoint	Description
+GET	/api/transactions	Get transactions with filters
+GET	/api/transactions/export	Export filtered transactions CSV
+GET	/api/transactions/export-financial-report	Download Excel Financial Report
+
+🛡️ All routes require the JWT token:
+
+makefile
+Copy
+Edit
+Authorization: Bearer <your_token_here>
+🧾 Export Financial Report API
+Method: GET
+
+URL: http://localhost:5000/api/transactions/export-financial-report
+
+Headers:
+
+Authorization: Bearer <JWT token>
+
+Response: Excel file (.xlsx)
+
+Example:
+vbnet
+Copy
+Edit
+GET /api/transactions/export-financial-report HTTP/1.1
+Host: localhost:5000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+📦 Sample Transaction Format
+json
+Copy
+Edit
+{
+  "id": "txn123",
+  "date": "2024-06-01T00:00:00Z",
+  "amount": 1500,
+  "category": "Expense",
+  "status": "Paid",
+  "user_id": "User_004",
+  "type": "Expense"
+}
+📤 CSV / Excel Export Examples
+Date	Amount	Category	Status	User
+2024-06-01	1500	Expense	Paid	User_004
+
+CSV: Via /api/transactions/export
+
+Excel: Via /api/transactions/export-financial-report
+
+🛠 TODO / Improvements
+ Date-range filter
+
+ Grouped financial summary charts (monthly/quarterly)
+
+ Role-based access for admins vs analysts
+
+ Audit trail for downloads
+
+Let me know if you want this saved as a downloadable README.md or deployed version link added.
+
+
+
+
+
+
+
+
+You said:
+give complete in one file
+
+
+ChatGPT said:
+Here’s the complete updated README.md in a single file format, including the newly added API for exporting the financial report:
+
+markdown
+Copy
+Edit
+# 📊 Financial Analytics Dashboard
+
+An end-to-end full-stack financial analytics dashboard that enables authenticated users to visualize, search, filter, and export transaction data. Built with **React (TypeScript)**, **Node.js**, **MongoDB**, and JWT-based authentication.
+
+---
+
+## 🧩 Tech Stack
+
+### 🚀 Frontend
+
+- **React.js (TypeScript)**
+- **Material UI**
+- **Chart.js**
+- **Axios**, **React Router DOM**
+
+### 🔧 Backend
+
+- **Node.js with TypeScript**
+- **Express.js**
+- **MongoDB + Mongoose**
+- **JWT Authentication**
+- **CSV Generation**
+
+---
+
+## 📁 Project Structure
+
+### Frontend: `frontend/`
+
+frontend/
+├── public/
+├── src/
+│ ├── assets/
+│ ├── components/
+│ │ └── dashboard/
+│ ├── pages/
+│ │ ├── Auth/
+│ │ └── Dashboard/
+│ ├── routes/
+│ ├── services/
+│ ├── types/
+│ ├── utils/
+│ ├── App.tsx
+│ └── index.tsx
+├── .env
+└── package.json
+
+shell
+Copy
+Edit
 
 ### Backend: `backend/`
 
-```
 backend/
 ├── src/
-│   ├── controllers/           # Controller logic (auth, transactions)
-│   ├── models/                # MongoDB schema models
-│   ├── routes/                # Express route handlers
-│   ├── services/              # Business logic and mailing
-│   ├── utils/                 # OTP & helpers
-│   ├── middlewares/           # Auth middleware
-│   ├── config/                # DB connection config
-│   └── server.js              # App entry point
+│ ├── controllers/
+│ ├── models/
+│ ├── routes/
+│ ├── services/
+│ ├── utils/
+│ ├── middlewares/
+│ ├── config/
+│ └── server.js
 ├── .env
-├── package.json
-└── README.md
-```
+└── package.json
+
+yaml
+Copy
+Edit
 
 ---
 
@@ -81,25 +292,24 @@ backend/
 
 - Secure **JWT-based login**
 - Protected routes and APIs
-- Role-based access (optional)
 
 ### 📊 Financial Dashboard
 
-- **Revenue vs Expenses** visualizations
-- **Category-wise breakdown**
-- **Summary metrics**
-- Paginated **Transaction table**
+- Revenue vs Expenses visualizations
+- Category-wise breakdown
+- Summary metrics
+- Paginated Transaction table
 
 ### 🔍 Advanced Filters & Search
 
-- Filter by **Date, Category, Amount, Status, User**
-- Column-based **Sorting**
-- Real-time **Search**
+- Filter by Date, Category, Amount, Status, User
+- Column-based Sorting
+- Real-time Search
 
 ### 📤 CSV Export
 
-- User-selectable columns for export
-- Auto-download CSV via browser
+- Configurable columns
+- One-click download from browser
 
 ---
 
@@ -109,125 +319,93 @@ backend/
 
 - Node.js `>= 18.x`
 - MongoDB instance
-- Yarn or npm
+- npm
 
----
-
-## 🚀 Frontend Setup
+### 🔽 Clone the Repository
 
 ```bash
+git clone https://github.com/onkarbhojane/Penta
+🚀 Frontend Setup
+bash
+Copy
+Edit
 cd frontend
-npm install    # or yarn
-```
-
-### ✏️ Create `.env`
-
-```env
-VITE_API_BASE_URL=http://localhost:5000/api
-```
-
-### 🔧 Run Dev Server
-
-```bash
-npm run dev    # or yarn dev
-```
-
----
-
-## 🔧 Backend Setup
-
-```bash
+npm install
+npm run dev
+🔧 Backend Setup
+bash
+Copy
+Edit
 cd backend
-npm install    # or yarn
-```
-
-### ✏️ Create `.env`
-
-```env
+npm install
+✏️ Create .env
+env
+Copy
+Edit
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/finance
-JWT_SECRET=your_jwt_secret
-```
+MONGO_URI=mongodb://localhost:27017
+JWT_SECRET=pqrs
+EMAIL_USER="onkar.bhojane22@gmail.com"
+EMAIL_PASS="elvt vask mdlq clng"
+▶️ Run Dev Server
+bash
+Copy
+Edit
+npm run dev
+📡 API Endpoints
+🔐 Auth APIs
+Method	Endpoint	Description
+POST	/api/auth/login	User login
+GET	/api/auth/profile	Get user profile
 
-### ▶️ Run Dev Server
+💸 Transaction APIs
+Method	Endpoint	Description
+GET	/api/transactions	Get transactions with filters
+GET	/api/transactions/export	Export selected columns as CSV
+GET	/api/transactions/export-financial-report	Export full financial report as Excel
 
-```bash
-npm run dev    # using nodemon
-```
+All transaction endpoints require JWT token in header:
+Authorization: Bearer <token>
 
----
-
-## 📡 API Endpoints
-
-### 🔐 Auth APIs
-
-| Method | Endpoint              | Description      |
-| ------ | --------------------- | ---------------- |
-| POST   | `/api/auth/login`   | User login       |
-| GET    | `/api/auth/profile` | Get user profile |
-
-### 💸 Transaction APIs
-
-| Method | Endpoint                     | Description                   |
-| ------ | ---------------------------- | ----------------------------- |
-| GET    | `/api/transactions`        | Get transactions with filters |
-| GET    | `/api/transactions/export` | Export CSV with column config |
-
-> All routes are protected using JWT token header:
-> `Authorization: Bearer <token>`
-
----
-
-## 📁 Sample Data Format
-
-```json
+📁 Sample Data Format
+json
+Copy
+Edit
 {
   "id": "txn123",
   "date": "2024-06-01T00:00:00Z",
   "amount": 1500,
   "category": "Expense",
   "status": "Paid",
-  "user": "User_004",
+  "user_id": "User_004",
   "type": "Expense"
 }
-```
+📦 CSV/Excel Export Example
+Date	Amount	Category	Status	User
+2024-06-01	1500	Expense	Paid	User_004
 
----
+Uses GET /api/transactions/export-financial-report
 
-## 🧪 Testing
+Automatically generates .xlsx file
 
-### Frontend
+JWT must be passed in Authorization header
 
-```bash
-npm run test
-```
+Example Request:
 
-### Backend
+bash
+Copy
+Edit
+GET http://localhost:5000/api/transactions/export-financial-report
+Authorization: Bearer <your_token_here>
+📌 TODO / Improvements
+ Add date-range filters to dashboard
 
-```bash
-nodemon src/server.js
-```
+ Advanced analytics by month/quarter/year
 
----
+ Add role-based access (admin, analyst, user)
 
-## 📦 CSV Export Example
+vbnet
+Copy
+Edit
 
-| Date       | Amount | Category | Status | User     |
-| ---------- | ------ | -------- | ------ | -------- |
-| 2024-06-01 | 1500   | Expense  | Paid   | User_004 |
-
-> Uses configurable column selection and generates a downloadable `.csv` file.
-
----
-
-## 📌 TODO / Improvements
-
-- [ ] Google OAuth
-- [ ] Date-range filters
-- [ ] Advanced analytics (monthly/quarterly)
-
----
-
-## 📄 License
-
-MIT
+Let me know if you'd like this exported as a downloadable `README.md` file.
