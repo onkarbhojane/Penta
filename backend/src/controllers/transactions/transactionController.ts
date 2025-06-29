@@ -49,7 +49,6 @@ export const getPaginatedTransactions = async (req: Request, res: Response): Pro
       .sort({ [sortField]: sortOrder === "asc" ? 1 : -1 })
       .skip((numericPage - 1) * numericLimit)
       .limit(numericLimit);
-
     res.status(200).json({
       data: txs,
       currentPage: numericPage,

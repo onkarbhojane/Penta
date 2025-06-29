@@ -5,7 +5,7 @@ import mailRoutes from "./routes/mail.routes";
 import transactionRoutes from "./routes/transaction.routes";
 const app = express();
 const allowedOrigins = [
-  "http://localhost:5173",
+  "http://localhost:5174",
   "https://penta-wine.vercel.app", 
 ];
 app.use(
