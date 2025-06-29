@@ -39,7 +39,7 @@ const TransactionSection: React.FC = () => {
   const fetchTransactions = async (page: number) => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/transactions/list`,
+        `${apiUrl}api/transactions/list`,
         {
           params: {
             page,
@@ -65,7 +65,7 @@ const TransactionSection: React.FC = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `${apiUrl}/api/transactions/export/csv`,
+        `${apiUrl}api/transactions/export/csv`,
         {
           params: {
             search: searchQuery,

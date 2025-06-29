@@ -57,7 +57,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}/api/transactions/summary`,
+        `${apiUrl}api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(
@@ -72,7 +72,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}/api/transactions/trends/monthly`,
+        `${apiUrl}api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -114,7 +114,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `${apiUrl}/api/transactions/trends/weekly`,
+        `${apiUrl}api/transactions/trends/weekly`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -187,7 +187,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}/api/transactions/trends/daily`,
+        `${apiUrl}api/transactions/trends/daily`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -254,7 +254,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${apiUrl}/api/transactions/recent`,
+        `${apiUrl}api/transactions/recent`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactions(response.data.data || []);

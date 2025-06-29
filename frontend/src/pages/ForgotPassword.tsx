@@ -49,7 +49,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `${apiUrl}/api/auth/forgot-password`,
+        `${apiUrl}api/auth/forgot-password`,
         { email }
       );
       setStep(2);
@@ -74,7 +74,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ resetToken: string }>(
-        `${apiUrl}/api/auth/verify-reset-otp`,
+        `${apiUrl}api/auth/verify-reset-otp`,
         { email, otp: otp.join("") }
       );
       setToken(response.data.resetToken);
@@ -101,7 +101,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `${apiUrl}/api/auth/reset-password`,
+        `${apiUrl}api/auth/reset-password`,
         { email, newPassword, resetToken: token }
       );
       setSuccess("Password reset successfully! Redirecting to login...");
@@ -122,7 +122,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `${apiUrl}/api/auth/resend-reset-otp`, 
+        `${apiUrl}api/auth/resend-reset-otp`, 
         { email }
       );
       setSuccess("New OTP sent to your email!");
