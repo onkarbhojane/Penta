@@ -1,6 +1,6 @@
 import React from "react";
 import type { Transaction } from "../../types/dashboardTypes";
-
+const apiUrl = import.meta.env.API_URL;
 interface RecentTransactionsProps {
   transactions: Transaction[];
 }

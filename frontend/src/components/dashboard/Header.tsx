@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiBell, FiChevronDown } from "react-icons/fi";
 import type { User } from "../../types/authTypes";
-
+const apiUrl = import.meta.env.API_URL;
 interface HeaderProps {
   activeNav: string;
   user: User;

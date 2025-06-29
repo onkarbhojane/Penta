@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import useUserStore from "../store/useUserStore";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.API_URL;
 const Login: React.FC = () => {
   const { user, setUser, clearUser } = useUserStore();
   const [email, setEmail] = useState<string>("");
@@ -17,7 +18,7 @@ const Login: React.FC = () => {
     setErrorMessage("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${apiUrl}/api/auth/login`, {
         email,
         password,
       });

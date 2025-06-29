@@ -6,7 +6,7 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import axios from "axios";
-
+const apiUrl = import.meta.env.API_URL;
 interface Transaction {
   _id: Key | null | undefined;
   category: string;
@@ -39,7 +39,7 @@ const TransactionSection: React.FC = () => {
   const fetchTransactions = async (page: number) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/transactions/list`,
+        `${apiUrl}/api/transactions/list`,
         {
           params: {
             page,
@@ -65,7 +65,7 @@ const TransactionSection: React.FC = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:5000/api/transactions/export/csv",
+        `${apiUrl}/api/transactions/export/csv`,
         {
           params: {
             search: searchQuery,

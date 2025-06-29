@@ -12,7 +12,7 @@ import {
   type ChartOptions,
 } from "chart.js";
 import axios from "axios";
-
+const apiUrl = import.meta.env.API_URL;
 ChartJS.register(
   Tooltip,
   Legend,
@@ -84,7 +84,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: SummaryData }>(
-        "http://localhost:5000/api/transactions/summary",
+        `${apiUrl}/api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(response.data?.data);
@@ -97,7 +97,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: TransactionStatus }>(
-        "http://localhost:5000/api/transactions/status",
+        `${apiUrl}/api/transactions/status`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactionStatus(response.data?.data);
@@ -110,7 +110,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: MonthlySummary[] }>(
-        "http://localhost:5000/api/transactions/trends/monthly",
+        `${apiUrl}/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -132,7 +132,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: StatusCategoryData }>(
-        "http://localhost:5000/api/transactions/status-category",
+        `${apiUrl}/api/transactions/status-category`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setData(response.data?.data);
@@ -153,7 +153,7 @@ const AnalyticsSection: React.FC = () => {
       setExportLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/transactions/export/excel",
+        `${apiUrl}/api/transactions/export/excel`,
         {
           params: { period },
           responseType: "blob",

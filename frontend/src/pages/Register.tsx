@@ -3,7 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import useUserStore from "../store/useUserStore";
 import { useNavigate } from "react-router-dom";
-
+const apiUrl = import.meta.env.API_URL;
 const Register: React.FC = () => {
   const { setUser } = useUserStore();
   const [step, setStep] = useState<number>(1);
@@ -44,7 +44,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ tempToken: string }>(
-        "http://localhost:5000/api/auth/register",
+        `${apiUrl}/api/auth/register`,
         { email, name }
       );
       setToken(response.data.tempToken);
@@ -69,7 +69,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ verifyToken: string }>(
-        "http://localhost:5000/api/auth/verify",
+        `${apiUrl}/api/auth/verify`,
         {
           email,
           otp: otp.join(""),
@@ -99,7 +99,7 @@ const Register: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ token: string }>(
-        "http://localhost:5000/api/auth/set-password",
+        `${apiUrl}/api/auth/set-password`,
         {
           email,
           username:name,
@@ -126,7 +126,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
     setError("");
     try {
-      await axios.post("http://localhost:5000/api/auth/resend-otp", { email, tempToken: token });
+      await axios.post(`${apiUrl}/api/auth/resend-otp`, { email, tempToken: token });
       setSuccess("New OTP sent to your email!");
       startResendTimer();
     } catch (err: any) {
@@ -171,7 +171,6 @@ const Register: React.FC = () => {
         transition={{ duration: 0.5 }}
         className="relative bg-gray-800/50 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-700 w-full max-w-md overflow-hidden"
       >
-        {/* Progress Bar */}
         <div className="h-1 bg-gray-700">
           <motion.div
             className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
