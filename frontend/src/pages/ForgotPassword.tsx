@@ -2,9 +2,6 @@ import React, { useState, useEffect, type ChangeEvent, type KeyboardEvent } from
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-const apiUrl = import.meta.env.API_URL;
-
-console.log("API URL:", apiUrl);
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();

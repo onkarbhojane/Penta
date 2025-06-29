@@ -21,7 +21,6 @@ import FinancialOverview from "../components/dashboard/FinancialOverviewProps";
 import RecentTransactions from "../components/dashboard/RecentTransactions";
 import TransactionSection from "../components/common/TransactionSection";
 import AnalyticsSection from "../components/common/Analytics";
-const apiUrl = import.meta.env.API_URL;
 import useUserStore from "../store/useUserStore";
 import type { Transaction, NavItem } from "../../types/dashboardTypes";
 
@@ -67,9 +66,6 @@ const Dashboard = () => {
       console.error("Error fetching summary data:", error);
     }
   };
-  useEffect(() => {
-    console.log(import.meta.env.API_URL,"apiUrl");
-  },[])
 
   const getMonthlyRevenueAndExpenses = async () => {
     try {
