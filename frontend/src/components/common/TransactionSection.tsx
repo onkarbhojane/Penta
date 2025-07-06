@@ -40,7 +40,7 @@ const TransactionSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/list`,
+        `http://localhost:5000/api/transactions/list`,
         {
           params: {
             page,
@@ -69,7 +69,7 @@ const TransactionSection: React.FC = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/export/csv`,
+        `http://localhost:5000/api/transactions/export/csv`,
         {
           params: {
             search: searchQuery,

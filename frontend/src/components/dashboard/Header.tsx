@@ -4,7 +4,7 @@ import type { User } from "../../types/authTypes";
 const apiUrl = import.meta.env.API_URL;
 interface HeaderProps {
   activeNav: string;
-  user: User;
+  user: User|null;
   onSignOut: () => void;
 }
 
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ activeNav, user, onSignOut }) => {
               />
             </div>
             <div className="text-left hidden md:block">
-              <p className="text-sm font-medium text-white">{user?.name}</p>
+              <p className="text-sm font-medium text-white">{user?.name||"User Name"}</p>
             </div>
             <FiChevronDown
               className={`text-gray-400 transition-transform ${
@@ -45,8 +45,8 @@ const Header: React.FC<HeaderProps> = ({ activeNav, user, onSignOut }) => {
           {showProfileMenu && (
             <div className="absolute right-0 mt-2 w-56 bg-[#23252E] rounded-xl shadow-lg border border-[#2A2D35] overflow-hidden z-20">
               <div className="p-4 border-b border-[#2A2D35]">
-                <p className="text-sm font-medium text-white">{user.name}</p>
-                <p className="text-xs text-gray-400">{user.email}</p>
+                <p className="text-sm font-medium text-white">{user?.name||"User Name"}</p>
+                <p className="text-xs text-gray-400">{user?.email||"User Email"}</p>
               </div>
               <div className="py-1 border-t border-[#2A2D35]">
                 <button

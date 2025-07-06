@@ -55,15 +55,28 @@ const Dashboard = () => {
   const getBalanceRevenueExpense = async () => {
     try {
       const token = localStorage.getItem("token");
+
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/summary`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        `http://localhost:5000/api/transactions/summary`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       setSummaryData(
         response.data?.data || { balance: 0, expense: 0, revenue: 0 }
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching summary data:", error);
+
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        alert(error.response.data.message);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user-storage");
+        navigate("/"); 
+      }
     }
   };
 
@@ -71,7 +84,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/trends/monthly`,
+        `http://localhost:5000/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -113,7 +126,7 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/trends/weekly`,
+        `http://localhost:5000/api/transactions/trends/weekly`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -186,7 +199,7 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/trends/daily`,
+        `http://localhost:5000/api/transactions/trends/daily`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -211,7 +224,7 @@ const Dashboard = () => {
       ];
 
       const filteredData = apiData
-        .map((entry) => {
+        .map((entry: unknown) => {
           const [day, month, year] = entry.day.split("/").map(Number);
           return { ...entry, dateObj: new Date(year, month - 1, day) };
         })
@@ -228,7 +241,7 @@ const Dashboard = () => {
         datasets: [
           {
             label: "Income",
-            data: filteredData.map((entry) => entry.income),
+            data: filteredData.map((entry:unknown) => entry.income),
             borderColor: "#10b981",
             backgroundColor: "rgba(16, 185, 129, 0.2)",
             tension: 0.4,
@@ -236,7 +249,7 @@ const Dashboard = () => {
           },
           {
             label: "Expenses",
-            data: filteredData.map((entry) => entry.expense),
+            data: filteredData.map((entry:unknown) => entry.expense),
             borderColor: "#f59e0b",
             backgroundColor: "rgba(245, 158, 11, 0.2)",
             tension: 0.4,
@@ -253,9 +266,10 @@ const Dashboard = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/recent`,
+        `http://localhost:5000/api/transactions/recent`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       setTransactions(response.data.data || []);
     } catch (error) {
       console.error("Error fetching recent transactions:", error);
@@ -289,30 +303,6 @@ const Dashboard = () => {
     localStorage.removeItem("user-storage");
     navigate("/");
   };
-
-  useEffect(() => {
-    const mainContent = mainContentRef.current;
-    const sidebar = sidebarRef.current;
-    if (!mainContent || !sidebar) return;
-
-    const syncScroll = (from: HTMLElement, to: HTMLElement) => {
-      if (isScrollingRef.current) return;
-      isScrollingRef.current = true;
-      to.scrollTop = from.scrollTop;
-      setTimeout(() => (isScrollingRef.current = false), 100);
-    };
-
-    const handleMainScroll = () => syncScroll(mainContent, sidebar);
-    const handleSidebarScroll = () => syncScroll(sidebar, mainContent);
-
-    mainContent.addEventListener("scroll", handleMainScroll);
-    sidebar.addEventListener("scroll", handleSidebarScroll);
-
-    return () => {
-      mainContent.removeEventListener("scroll", handleMainScroll);
-      sidebar.removeEventListener("scroll", handleSidebarScroll);
-    };
-  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -372,7 +362,7 @@ const Dashboard = () => {
 
   const handleNavClick = (label: string) => {
     setActiveNav(label);
-    const refMap: Record<string, React.RefObject<HTMLDivElement>> = {
+    const refMap: Record<string, React.RefObject<HTMLDivElement | null>> = {
       Dashboard: dashboardRef,
       Transactions: transactionsRef,
       Analytics: analyticsRef,

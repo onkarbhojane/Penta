@@ -1,3 +1,5 @@
+import type { Key } from "react";
+
 export interface SummaryCardProps {
   title: string;
   value: string;

@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     setErrorMessage("");
 
     try {
-      const res = await axios.post(`https://penta-eczo.onrender.com/api/auth/login`, {
+      const res = await axios.post(`http://localhost:5000/api/auth/login`, {
         email,
         password,
       });
@@ -27,6 +27,7 @@ const Login: React.FC = () => {
       setUser(res.data.user);
       navigate("/dashboard", { replace: true });
     } catch (err) {
+      console.log(err)
       setIsLoading(false);
       setErrorMessage("Login failed. Please check your credentials.");
     }

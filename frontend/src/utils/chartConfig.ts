@@ -9,6 +9,7 @@ import {
   Tooltip,
   Filler,
   Legend,
+  type ChartOptions,
 } from "chart.js";
 
 ChartJS.register(
@@ -20,5 +21,5 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
 );

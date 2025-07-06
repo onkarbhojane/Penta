@@ -9,7 +9,7 @@ export interface NavItem {
 interface SidebarProps {
   activeNav: string;
   navItems: NavItem[];
-  sidebarRef: React.RefObject<HTMLDivElement>;
+  sidebarRef: React.RefObject<HTMLDivElement|null>;
   onNavClick: (label: string) => void;
 }
 

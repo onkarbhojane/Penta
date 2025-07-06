@@ -49,7 +49,7 @@ const FinancialOverview: React.FC<FinancialOverviewProps> = ({
       y: {
         ticks: {
           color: "#9ca3af",
-          callback: (value) => "$" + value,
+          callback: (value) => "₹" + value,
         },
         grid: { color: "#2f2f2f" },
       },

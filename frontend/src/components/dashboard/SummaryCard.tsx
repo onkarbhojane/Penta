@@ -5,16 +5,12 @@ interface SummaryCardProps {
   title: string;
   value: string;
   icon: React.ReactNode;
-  change: string;
-  changePositive: boolean;
 }
 
 const SummaryCard: React.FC<SummaryCardProps> = ({
   title,
   value,
-  icon,
-  change,
-  changePositive,
+  icon
 }) => (
   <div className="bg-[#23252E] p-5 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
     <div className="flex justify-between items-start">

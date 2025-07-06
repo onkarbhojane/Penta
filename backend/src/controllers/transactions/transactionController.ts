@@ -1,7 +1,10 @@
 import { Request, Response } from "express";
 import Transaction from "../../models/Transaction.models";
 
-export const getRecentTransactions = async (req: Request, res: Response): Promise<void> => {
+export const getRecentTransactions = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const txs = await Transaction.find().sort({ date: -1 }).limit(5);
     res.status(200).json({ message: "Recent fetched", data: txs });
@@ -11,7 +14,10 @@ export const getRecentTransactions = async (req: Request, res: Response): Promis
   }
 };
 
-export const getPaginatedTransactions = async (req: Request, res: Response): Promise<void> => {
+export const getPaginatedTransactions = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const {
       page = "1",
@@ -37,7 +43,7 @@ export const getPaginatedTransactions = async (req: Request, res: Response): Pro
     const query: Record<string, any> = {};
     if (search) {
       query.$or = [
-        { name: { $regex: search, $options: "i" } },
+        { user_profile: { $regex: search, $options: "i" } },
         { user_id: { $regex: search, $options: "i" } },
       ];
     }

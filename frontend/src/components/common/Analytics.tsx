@@ -22,6 +22,7 @@ ChartJS.register(
   BarElement,
   Title
 );
+import '../../utils/chartConfig'
 
 interface SummaryData {
   balance: number;
@@ -84,7 +85,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: SummaryData }>(
-        `https://penta-eczo.onrender.com/api/transactions/summary`,
+        `http://localhost:5000/api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(response.data?.data);
@@ -97,7 +98,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: TransactionStatus }>(
-        `https://penta-eczo.onrender.com/api/transactions/status`,
+        `http://localhost:5000/api/transactions/status`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactionStatus(response.data?.data);
@@ -110,7 +111,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: MonthlySummary[] }>(
-        `https://penta-eczo.onrender.com/api/transactions/trends/monthly`,
+        `http://localhost:5000/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -132,7 +133,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: StatusCategoryData }>(
-        `https://penta-eczo.onrender.com/api/transactions/status-category`,
+        `http://localhost:5000/api/transactions/status-category`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setData(response.data?.data);
@@ -153,7 +154,7 @@ const AnalyticsSection: React.FC = () => {
       setExportLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `https://penta-eczo.onrender.com/api/transactions/export/excel`,
+        `http://localhost:5000/api/transactions/export/excel`,
         {
           params: { period },
           responseType: "blob",

@@ -5,11 +5,11 @@ import mailRoutes from "./routes/mail.routes";
 import transactionRoutes from "./routes/transaction.routes";
 const app = express();
 const allowedOrigins = [
-  "http://localhost:5174",
+  "http://localhost:5173/",
   "https://penta-wine.vercel.app", 
 ];
-app.use(
-  cors({
+
+app.use(cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);

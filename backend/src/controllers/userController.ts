@@ -14,7 +14,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     }
 
     const otp = generateOTP();
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
 
     let user: IUser | null = await User.findOne({ email });
 
@@ -33,9 +33,19 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
       await user.save();
     }
 
-    await sendMail(email, "Your OTP Code", `Your OTP for registration is ${otp}. It will expire in 10 minutes.`);
+    await sendMail(
+      email,
+      "Your OTP Code",
+      `Your OTP for registration is ${otp}. It will expire in 10 minutes.`
+    );
 
-    res.status(200).send("OTP sent successfully via email.");
+    const tempToken = jwt.sign(
+      { email, purpose: "verify-email" },
+      process.env.JWT_SECRET!,
+      { expiresIn: "10m" }
+    );
+
+    res.status(200).json({ tempToken });
   } catch (error) {
     console.error("Error in registerUser:", error);
     res.status(500).send("Internal Server Error");
@@ -45,27 +55,35 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 export const verifyOTP = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, otp }: { email?: string; otp?: string } = req.body;
+
     if (!email || !otp) {
       res.status(400).send("Email and OTP are required");
       return;
     }
 
     const user: IUser | null = await User.findOne({ email });
+
     if (!user || user.otp !== otp) {
       res.status(400).send("Invalid OTP or email");
       return;
     }
+
     if (user.otpExpiresAt && user.otpExpiresAt < new Date()) {
       res.status(400).send("OTP expired");
       return;
     }
-
     user.isEmailVerified = true;
     user.otp = undefined;
     user.otpExpiresAt = undefined;
     await user.save();
 
-    res.status(200).send("OTP verified successfully");
+    const verifyToken = jwt.sign(
+      { email, purpose: "set-password" },
+      process.env.JWT_SECRET!,
+      { expiresIn: "15m" }
+    );
+
+    res.status(200).json({ verifyToken });
   } catch (error) {
     console.error("Error in verifyOTP:", error);
     res.status(500).send("Internal Server Error");
@@ -97,9 +115,19 @@ export const resendOTP = async (req: Request, res: Response): Promise<void> => {
     user.otpExpiresAt = expiresAt;
     await user.save();
 
-    await sendMail(email, "Resend OTP Code", `Your new OTP is ${otp}. It will expire in 10 minutes.`);
+    await sendMail(
+      email,
+      "Resend OTP Code",
+      `Your new OTP is ${otp}. It will expire in 10 minutes.`
+    );
 
-    res.status(200).send("OTP resent successfully");
+    const tempToken = jwt.sign(
+      { email, purpose: "verify-email" },
+      process.env.JWT_SECRET!,
+      { expiresIn: "10m" }
+    );
+
+    res.status(200).json({ tempToken });
   } catch (error) {
     console.error("Error in resendOTP:", error);
     res.status(500).send("Internal Server Error");
@@ -108,17 +136,29 @@ export const resendOTP = async (req: Request, res: Response): Promise<void> => {
 
 export const setPassword = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password }: { email?: string; password?: string } = req.body;
-    if (!email || !password) {
-      res.status(400).send("Email and password are required");
+    const { password, verifyToken }: { password?: string; verifyToken?: string } = req.body;
+
+    if (!password || !verifyToken) {
+      res.status(400).send("Password and verification token are required");
       return;
     }
+
+    let decoded: any;
+    try {
+      decoded = jwt.verify(verifyToken, process.env.JWT_SECRET!);
+    } catch (err) {
+      res.status(401).send("Invalid or expired token");
+      return;
+    }
+
+    const email = decoded.email;
 
     const user: IUser | null = await User.findOne({ email });
     if (!user) {
       res.status(404).send("User not found");
       return;
     }
+
     if (!user.isEmailVerified) {
       res.status(403).send("Email not verified");
       return;
@@ -127,19 +167,23 @@ export const setPassword = async (req: Request, res: Response): Promise<void> =>
     user.password = await bcrypt.hash(password, 10);
     await user.save();
 
-    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
-    });
+    const authToken = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET!,
+      { expiresIn: "1h" }
+    );
 
-    res.status(200).json({ message: "Password set successfully", token });
+    res.status(200).json({ message: "Password set successfully", token: authToken });
   } catch (error) {
     console.error("Error in setPassword:", error);
     res.status(500).send("Internal Server Error");
   }
 };
 
+
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log(req.body+"kjndskljvsdflkjkvlk");
     const { email, password }: { email?: string; password?: string } = req.body;
     const user: IUser | null = await User.findOne({ email });
     if (!user) {

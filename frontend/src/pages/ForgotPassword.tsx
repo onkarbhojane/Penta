@@ -46,7 +46,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `https://penta-eczo.onrender.com/api/auth/forgot-password`,
+        `http://localhost:5000/api/auth/forgot-password`,
         { email }
       );
       setStep(2);
@@ -71,7 +71,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ resetToken: string }>(
-        `https://penta-eczo.onrender.com/api/auth/verify-reset-otp`,
+        `http://localhost:5000/api/auth/verify-reset-otp`,
         { email, otp: otp.join("") }
       );
       setToken(response.data.resetToken);
@@ -98,7 +98,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `https://penta-eczo.onrender.com/api/auth/reset-password`,
+        `http://localhost:5000/api/auth/reset-password`,
         { email, newPassword, resetToken: token }
       );
       setSuccess("Password reset successfully! Redirecting to login...");
@@ -119,7 +119,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `https://penta-eczo.onrender.com/api/auth/resend-reset-otp`, 
+        `http://localhost:5000/api/auth/resend-reset-otp`, 
         { email }
       );
       setSuccess("New OTP sent to your email!");
@@ -305,7 +305,7 @@ const ForgotPassword: React.FC = () => {
 
               <div className="text-center text-sm text-gray-400 mt-4">
                 <p>
-                  Remembered your password?{" "}
+                  Remembered my password?{" "}
                   <a
                     onClick={() => navigate("/login",{ replace: true })}
                     className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
