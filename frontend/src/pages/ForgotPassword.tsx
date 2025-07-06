@@ -46,7 +46,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `http://localhost:5000/api/auth/forgot-password`,
+        `https://penta-eczo.onrender.com/api/auth/forgot-password`,
         { email }
       );
       setStep(2);
@@ -71,7 +71,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       const response = await axios.post<{ resetToken: string }>(
-        `http://localhost:5000/api/auth/verify-reset-otp`,
+        `https://penta-eczo.onrender.com/api/auth/verify-reset-otp`,
         { email, otp: otp.join("") }
       );
       setToken(response.data.resetToken);
@@ -98,7 +98,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `http://localhost:5000/api/auth/reset-password`,
+        `https://penta-eczo.onrender.com/api/auth/reset-password`,
         { email, newPassword, resetToken: token }
       );
       setSuccess("Password reset successfully! Redirecting to login...");
@@ -119,7 +119,7 @@ const ForgotPassword: React.FC = () => {
     setError("");
     try {
       await axios.post(
-        `http://localhost:5000/api/auth/resend-reset-otp`, 
+        `https://penta-eczo.onrender.com/api/auth/resend-reset-otp`, 
         { email }
       );
       setSuccess("New OTP sent to your email!");

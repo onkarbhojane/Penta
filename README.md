@@ -158,7 +158,7 @@ EMAIL_PASS="<your_email_app_password>"
 npm run dev
 ```
 
-The backend will be available at `http://localhost:5000`
+The backend will be available at `https://penta-eczo.onrender.com`
 
 ---
 

@@ -85,7 +85,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: SummaryData }>(
-        `http://localhost:5000/api/transactions/summary`,
+        `https://penta-eczo.onrender.com/api/transactions/summary`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummaryData(response.data?.data);
@@ -98,7 +98,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: TransactionStatus }>(
-        `http://localhost:5000/api/transactions/status`,
+        `https://penta-eczo.onrender.com/api/transactions/status`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTransactionStatus(response.data?.data);
@@ -111,7 +111,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: MonthlySummary[] }>(
-        `http://localhost:5000/api/transactions/trends/monthly`,
+        `https://penta-eczo.onrender.com/api/transactions/trends/monthly`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -133,7 +133,7 @@ const AnalyticsSection: React.FC = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get<{ data: StatusCategoryData }>(
-        `http://localhost:5000/api/transactions/status-category`,
+        `https://penta-eczo.onrender.com/api/transactions/status-category`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setData(response.data?.data);
@@ -154,7 +154,7 @@ const AnalyticsSection: React.FC = () => {
       setExportLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:5000/api/transactions/export/excel`,
+        `https://penta-eczo.onrender.com/api/transactions/export/excel`,
         {
           params: { period },
           responseType: "blob",
