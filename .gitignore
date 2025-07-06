@@ -6,6 +6,7 @@ build/
 .env.local
 .env.*.local
 
+./Onkar_Bhojane_VITPune.mp4
 # Logs
 *.log
 
